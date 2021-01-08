@@ -1,8 +1,5 @@
-<div class="utilities-container">
-	<div class="utilities-item">
-		<a href="#" class="js-modal-open utilities-link" data-toggle="#nav-hamburger" aria-label="{{ 'Menú' | translate }}">
-			{% include "snipplets/svg/bars.tpl" with {svg_custom_class: "icon-inline icon-w-14 svg-icon-text"} %}
-		</a>
-	</div>
+<div class="nav-desktop">
+    <ul class="nav-desktop-list" data-store="navigation">
+        {% include 'snipplets/navigation/navigation-nav-list.tpl' with {'desktop_nav' : true } %}
+    </ul>
 </div>
-	

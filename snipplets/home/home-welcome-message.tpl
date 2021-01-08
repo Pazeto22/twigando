@@ -3,9 +3,9 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-8 offset-md-2">
-                    <h2 class="welcome-title">{{ settings.welcome_message }}</h2>
+                    <h2 class="h1">{{ settings.welcome_message }}</h2>
                     {% if settings.welcome_text %}
-                        <p class="welcome-text">{{ settings.welcome_text }}</p>
+                        <p>{{ settings.welcome_text }}</p>
                     {% endif %}
                 </div>
             </div>

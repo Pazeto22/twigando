@@ -6,9 +6,9 @@
 {# Get the array that contains the display settings for each payment method #}
 {% set payment_methods_config = product.payment_methods_config %}
 
-    {% embed "snipplets/modal.tpl" with{modal_id: 'installments-modal', modal_position: 'bottom', modal_transition: 'slide', modal_header: true, modal_footer: true, modal_width: 'centered', modal_mobile_full_screen: 'true'} %}
+    {% embed "snipplets/modal.tpl" with{modal_id: 'installments-modal',modal_class: 'bottom-md', modal_position: 'right', modal_transition: 'slide', modal_header: true, modal_footer: true, modal_width: 'centered', modal_mobile_full_screen: 'true'} %}
         {% block modal_head %}
-            {{'Medios de pago' | translate }}
+            {{ 'Medios de pago' | translate }}
         {% endblock %}
         {% block modal_body %}
 
@@ -30,7 +30,7 @@
                                 <a href="#installment_{{ custom_payment.code }}" class="js-tab-link tab-link">
                                     {{ custom_payment.name | upper }}
                                     {% if custom_payment.discount > 0 %}
-                                        <span class="label label-accent ml-1"><strong>{{ custom_payment.discount }}% {{'OFF' | translate }}</strong></span>
+                                        <span class="label label-accent label-small ml-1"><strong>{{ custom_payment.discount }}% {{'OFF' | translate }}</strong></span>
                                     {% endif %}
                                 </a>
                             </li>
@@ -52,7 +52,6 @@
                                     {# Payments info with readonly #}
 
                                     {# Evaluate whether the payment method should show complete installments data #}
-                                    
                                     {% if payment_methods_config[method].show_full_installments %}
 
                                         {# Payments Gateways with banks: at the moment only MP AR #}
@@ -87,33 +86,35 @@
 
                         {% if loop.last and custom_payment is not null %}
                             <div class="js-tab-panel tab-panel js-gw-tab-pane" id="installment_{{ custom_payment.code }}">
-                                <div class="box">
+                                <div class="box p-3">
 
                                     {# Custom method instructions #}
 
-                                    <h6 class="mb-2">{{ 'Cuando termines la compra vas a ver la información de pago en relación a esta opción.' | translate }}</h6>
+                                    <h6 class="mb-3 font-weight-normal">{{ 'Cuando termines la compra vas a ver la información de pago en relación a esta opción.' | translate }}</h6>
 
                                     {% if custom_payment.discount > 0 %}
-                                        <div class="mb-1">
+                                        <div class="mb-2">
+                                            <span class="float-left mr-2">
+                                              {% include "snipplets/svg/money-bill.tpl" with {svg_icon_underline: true, svg_custom_class : "icon-inline svg-icon-text icon-lg"} %}
+                                            </span>
                                             <span><strong>{{ custom_payment.discount }}% {{'de descuento' | translate }}</strong> {{'pagando con' | translate }} {{ custom_payment.name }}</span>
                                         </div>
                                     {% endif %}
 
                                     {# Price total #}
 
-                                    <h4 class="mb-1 font-weight-normal">
-                                        <span>{{ 'Total:' | translate }}</span>
+                                    <h3 class="mb-3 font-weight-normal">
+                                        <span>{{ 'Total:' | translate }}</span>   
                                         {% if custom_payment.discount > 0 %}
                                             {% set price_with_discount = product.price - ((product.price * custom_payment.discount) / 100) %}
-                                            <span class="price-compare">{{ product.price | money }}</span>
-                                            <strong class="js-installments-one-payment h3 text-brand">{{ price_with_discount | money }}</strong> 
+                                            <span class="opacity-50 price-compare h4 font-weight-normal">{{ product.price | money }}</span><strong class="js-installments-one-payment">{{ price_with_discount | money }}</strong> 
                                         {% else %} 
                                             <strong class="js-installments-one-payment ml-3">{{ product.price | money }}</strong>
                                         {% endif %}
-                                    </h4>
+                                    </h3>
 
                                     {% if custom_payment.discount > 0 %}
-                                        <div class="mt-3">{{'El descuento será aplicado sobre el costo total de la compra (sin envío) al finalizar la misma.' | translate }}</div>
+                                        <div class="font-small">{{'El descuento será aplicado sobre el costo total de la compra (sin envío) al finalizar la misma.' | translate }}</div>
                                     {% endif %}
                                 
                                 </div>

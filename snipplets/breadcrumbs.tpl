@@ -8,7 +8,7 @@
 #}
 
 {% if breadcrumbs %}
-    <div class="breadcrumbs {{ breadcrumbs_custom_class }}">
+    <div class="breadcrumbs {{ breadcrumbs_custom_class }} {% if template == 'category' %}mb-md-0 text-center text-md-left{% endif %}">
         <a class="crumb" href="{{ store.url }}" title="{{ store.name }}">{{ "Inicio" | translate }}</a>
         <span class="divider">></span>
         {% if template == 'page' %}

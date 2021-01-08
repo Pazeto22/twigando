@@ -6,8 +6,8 @@
 
     {# Credit cards #}
 
-    <h6 class="mb-1">{{'Tarjetas de crédito' | translate }}</h6>
-    <div id="installment-credit-card-option-{{ method }}" class="box">
+    <h6 class="mb-2">{{'Tarjetas de crédito' | translate }}</h6>
+    <div id="installment-credit-card-option-{{ method }}" class="box p-3">
 
         {# Credit cards max installments only for AR stores #}
 
@@ -55,7 +55,7 @@
 
         {% for logo in installments_data['cards'] %}
             <span class="mb-3">
-                <img src="{{ 'images/empty-placeholder.png' | static_url }}" data-src="{{ logo | payment_new_logo }}" class="lazyload card-img card-img-medium">
+                <img src="{{ 'images/empty-placeholder.png' | static_url }}" data-src="{{ logo | payment_new_logo }}" class="lazyload card-img card-img-big">
             </span>
         {% endfor %}
 
@@ -80,15 +80,15 @@
                             {# Installment amount #}
 
                             <td>
-                                <strong><span class="js-installment-amount">{{ installment }}</span></strong>
-                                </span>{% if installment > 1 %}{{ 'cuotas' | translate }}{% else %}{{ 'cuota' | translate }}{% endif %}</span>
+                                <strong class="text-primary"><span class="js-installment-amount">{{ installment }}</span></strong>
+                                <span class="text-primary">{% if installment > 1 %}{{ 'cuotas' | translate }}{% else %}{{ 'cuota' | translate }}{% endif %}</span>
                             </td>
 
                             {# Installment price #}
 
                             <td>
                                 <span>{{ 'de ' | translate }}</span>
-                                <strong><span class="js-installment-price">{{ (rounded_installment_value * 100) | money }}</span> </strong>
+                                <strong class="text-primary"><span class="js-installment-price">{{ (rounded_installment_value * 100) | money }}</span> </strong>
 
                                 {% if data_installment.without_interests or installments_data['max_with_interests'] == 0 %}
                                     {{ 'sin interés' | t }}
@@ -97,7 +97,7 @@
 
                             {# Total price #}
 
-                            <td class="js-installment-total-price text-right">
+                            <td class="js-installment-total-price text-right text-primary">
                                 {{ total_value_in_cents | money }}
                             </td>
                         </tr>
@@ -114,7 +114,7 @@
 
     {# Cash module title #}
 
-    <h6 class="mb-1">
+    <h6 class="mb-2">
         {% if store.country == 'BR' %}
             {% if wording_method_only_cash %}
                 {{'Efectivo' | translate }}
@@ -130,14 +130,14 @@
 
     {# If has debit card or cash #}
 
-    <div id="installment-cash-option-{{ method }}" class="box">
+    <div id="installment-cash-option-{{ method }}" class="box p-3">
 
         {# Cash flags #}
 
-        <div class="">
+        <div>
             {% for logo in installments_data['direct'] %}
                 <span>
-                    <img src="{{ 'images/empty-placeholder.png' | static_url }}" data-src="{{ logo | payment_new_logo }}" class="lazyload card-img card-img-medium">
+                    <img src="{{ 'images/empty-placeholder.png' | static_url }}" data-src="{{ logo | payment_new_logo }}" class="lazyload card-img card-img-big">
                 </span>
             {% endfor %}
 
@@ -149,10 +149,10 @@
             {% set price_with_boleto_discount = product.price - ((product.price * discount) / 100) %}
             <div class="my-1"> {{'Boleto Paghiper tiene un' | translate }} <strong>{{discount}}% {{'de descuento' | translate }}</strong></div>
 
-            <h4 class="font-weight-normal mb-3">
+            <h3 class="font-weight-normal mb-3">
                 <span>{{ 'Total:' | translate }}</span>
-                <span class="price-compare">{{ product.price | money }}</span><strong class="js-installments-one-payment">{{ price_with_boleto_discount | money }}</strong> 
-            </h4>
+                <span class="opacity-50 price-compare h4 font-weight-normal">{{ product.price | money }}</span><strong class="js-installments-one-payment">{{ price_with_boleto_discount | money }}</strong>
+            </h3>
 
             <div class="font-small">{{'El descuento será aplicado sobre el costo total de la compra (sin envío) al finalizar la misma.' | translate }}</div>
 
@@ -165,6 +165,34 @@
             </h4>
 
         {% endif %}
-
+        
     </div>
+{% endif %}
+
+{# Supported Payment Methods #}
+
+{% if installments_data['supported_payment_methods'] %}
+    {% for paymentMethod in installments_data['supported_payment_methods'] %}
+
+        {# Payment Method Title #}
+        <h6 class="mb-2">{{ paymentMethod.name }}</h6>
+
+        <div id="info-payment-method-{{ paymentMethod.id }}" class="box p-3">
+
+            {# Payment Method Logos #}
+            <div>
+                {% for logo in paymentMethod.logos %}
+                    <span>
+                        <img src="{{ 'images/empty-placeholder.png' | static_url }}" data-src="{{ logo | payment_new_logo }}" class="lazyload card-img card-img-big">
+                    </span>
+                {% endfor %}
+
+            </div>
+
+            {# Payment Method Total #}
+            <h4 class="font-weight-normal mb-0">
+                <span>{{ 'Total:' | translate }}</span><strong class="js-installments-one-payment">{{ product.price | money }}</strong>
+            </h4>
+        </div>
+    {% endfor %}
 {% endif %}

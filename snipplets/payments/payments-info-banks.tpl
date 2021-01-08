@@ -4,8 +4,8 @@
 
 {# Credit cards #}
 {% if gateways.cc is not null %}
-  <h6 class="mb-1">{{'Tarjetas de crédito' | translate }}</h6>
-  <div class="box">
+  <h6 class="mb-2">{{'Tarjetas de crédito' | translate }}</h6>
+  <div class="box p-3">
     {# Installments without interest modules by groups, E.g: 3, 6, 9, 12 #}
 
     {% if gateways.cc is null or gateways.cc is empty is not null %}
@@ -78,8 +78,8 @@
 {# Cash methods #}
 
 {% if gateways.debit is not null or gateways.cash is not null or gateways.transfer is not null %}
-  <h6 class="mb-1">{{'Tarjeta de débito y efectivo' | translate }}</h6>
-  <div class="box">
+  <h6 class="mb-2">{{'Tarjeta de débito y efectivo' | translate }}</h6>
+  <div class="box p-3">
 
     {# Debit card #}
 

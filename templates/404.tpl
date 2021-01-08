@@ -1,8 +1,13 @@
-{% embed "snipplets/page-header.tpl" %}
-	{% block page_header_text %}{{ "Error" | translate }} - {{ "404" | translate }}{% endblock page_header_text %}
-{% endembed %}
+{# Only remove this if you want to take away the theme onboarding advices #}
+{% set show_help = not has_products %}
 
-<section>
+{% if not show_help %}
+	{% embed "snipplets/page-header.tpl" %}
+		{% block page_header_text %}{{ "Error" | translate }} - {{ "404" | translate }}{% endblock page_header_text %}
+	{% endembed %}
+{% endif %}
+
+<section id="404">
 	<div class="container">
 		<div class="row">
 			<div class="col-12 text-center">
@@ -25,3 +30,9 @@
 	</div>
 </section>
 
+{# Here we will add an example as a help, you can delete this after you upload your products #}
+{% if show_help %}
+    <div id="product-example">
+        {% snipplet 'defaults/show_help_product.tpl' %}
+    </div>
+{% endif %}

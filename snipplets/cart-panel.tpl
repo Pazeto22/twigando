@@ -15,6 +15,8 @@
      	{{ "¡Uy! No tenemos más stock de este producto para agregarlo al carrito. Si querés podés" | translate }}<a href="{{ store.products_url }}" class="btn-link ml-1">{{ "ver otros acá" | translate }}</a>
     </div>
 </div>
+
 <div class="cart-row">
     {% include "snipplets/cart-totals.tpl" %}
 </div>
+

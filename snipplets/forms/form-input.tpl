@@ -58,7 +58,7 @@
         <input 
             type="{% if type_text %}text{% elseif type_number %}number{% elseif type_tel %}tel{% elseif type_password %}password{% elseif type_hidden %}hidden{% endif %}"
             {% if input_id %}id="{{ input_id }}"{% endif %}
-            class="form-control {{ input_custom_class }} {% if input_append_content %}form-control-inline{% endif %}" 
+            class="{% if type_password %}js-password-input{% endif %} form-control {{ input_custom_class }} {% if input_append_content %}form-control-inline{% endif %}" 
             autocorrect="off" 
             autocapitalize="off" 
             {% if type_password %}autocomplete="off"{% endif %}
@@ -68,14 +68,26 @@
             {% if input_placeholder %}placeholder="{{ input_placeholder }}"{% endif %}
             {% if input_data_attr %}data-{{ input_data_attr }}="{{ input_data_val }}"{% endif %}
             {% if input_aria_label %}aria-label="{{ input_aria_label }}"{% endif %}/>
+            {% if type_password %} 
+            <a aria-label="{{ 'Ver contraseña' | translate }}" class="js-password-view btn form-toggle-eye">
+                <span class="js-eye-open" style="display: none;">
+                    {% include "snipplets/svg/eye.tpl" with {svg_custom_class: "icon-inline svg-icon-primary"} %}
+                </span>
+                <span class="js-eye-closed">
+                    {% include "snipplets/svg/eye-closed.tpl" with {svg_custom_class: "icon-inline svg-icon-primary"} %}
+                </span>
+            </a>                        
+            {% endif %}
     {% endif %}
+    {% block input_add_on %}
+    {% endblock input_add_on %}
     {% if input_append_content or input_prepend_content %}
     </div>
     {% endif %}
     {% block input_append_content %}
     {% endblock input_append_content %}
     {% if input_help %}
-    <div class="mt-4 text-center">
+   <div class="mt-4 text-center">
         <a href="{{ input_help_link }}" class="btn-link {{ input_link_class }}">{% block input_help_text %}{% endblock input_help_text %}</a>
     </div>
     {% endif %}

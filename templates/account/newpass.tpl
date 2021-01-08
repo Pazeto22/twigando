@@ -1,5 +1,5 @@
 {% embed "snipplets/page-header.tpl" %}
-    {% block page_header_text %}{{ (customer.password ? 'Cambiar Contraseña' : 'Activar cuenta') | translate }}{% endblock page_header_text %}
+    {% block page_header_text %}{{ (customer.password ? 'Cambiar contraseña' : 'Activar cuenta') | translate }}{% endblock page_header_text %}
 {% endembed %}
 
 <section class="account-page">
@@ -10,7 +10,7 @@
                     <div class="alert alert-danger">{{ 'Las contraseñas no coinciden.' | translate }}</div>
                 {% endif %}
 
-                {% embed "snipplets/forms/form.tpl" with{form_id: 'newpass-form', submit_text: (customer.password ? 'Cambiar contraseña' : 'Activar cuenta')  | translate } %}
+                {% embed "snipplets/forms/form.tpl" with{form_id: 'newpass-form', submit_custom_class: 'btn-block', submit_text: (customer.password ? 'Cambiar contraseña' : 'Activar cuenta')  | translate } %}
                     {% block form_body %}
 
                         {# Password input #}
@@ -20,7 +20,7 @@
 
                         {# Password confirm input #}
 
-                        {% embed "snipplets/forms/form-input.tpl" with{type_password: true, input_for: 'password_confirm', input_name: 'password_confirm', input_id: 'password_confirm', input_label_text: 'Confirmar Contraseña' | translate } %}
+                        {% embed "snipplets/forms/form-input.tpl" with{type_password: true, input_for: 'password_confirm', input_name: 'password_confirm', input_id: 'password_confirm', input_label_text: 'Confirmar contraseña' | translate } %}
                         {% endembed %}
                         
                     {% endblock %}

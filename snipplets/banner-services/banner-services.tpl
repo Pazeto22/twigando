@@ -1,7 +1,7 @@
 {% macro for_each_banner_include(template) %}
     {% set num_banners_services = 0 %}
     {% set available_banners = []%}
-    {% for banner in ['banner_services_01', 'banner_services_02', 'banner_services_03'] %}
+    {% for banner in ['banner_services_01', 'banner_services_02', 'banner_services_03', 'banner_services_04'] %}
         {% set banner_services_icon = attribute(settings,"#{banner}_icon") %}
         {% set banner_services_title = attribute(settings,"#{banner}_title") %}
         {% set banner_services_description = attribute(settings,"#{banner}_description") %}

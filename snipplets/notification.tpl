@@ -1,12 +1,10 @@
-{# Order notification #}
-
-{% if order_notification and status_page_url %}
-    <div data-url="{{ status_page_url }}" class="js-notification notification notification-secondary" style="display:none;">
+{% if show_order_cancellation %}
+    <div class="js-notification js-notification-order-cancellation notification notification-fixed-bottom notification-tertiary col-lg-4 offset-lg-4" style="display:none;" data-url="{{ status_page_url }}">
         <div class="container">
             <div class="row">
                 <div class="col">
-                    <a class="btn" href="{{ status_page_url }}"><strong>{{ "Seguí acá" | translate }}</strong> {{ "tu última compra" | translate }}</a>
-                    <a class="js-notification-close ml-3" href="#">
+                    <a href="{{ store.contact_url }}?order_cancellation=true"><strong class="text-primary">{{ "Botón de arrepentimiento" | translate }}</strong></a>
+                    <a class="js-notification-close js-notification-order-cancellation-close ml-3" href="#">
                         {% include "snipplets/svg/times.tpl" with {svg_custom_class: "icon-inline svg-icon-primary icon-lg"} %}
                     </a>
                 </div>
@@ -14,24 +12,35 @@
         </div>
     </div>
 {% endif %}
-
-{# Add to cart notification #}
+{% if order_notification and status_page_url %}
+    <div class="js-notification js-notification-status-page notification notification-primary" style="display:none;" data-url="{{ status_page_url }}">
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <a href="{{ status_page_url }}"><strong>{{ "Seguí acá" | translate }}</strong> {{ "tu última compra" | translate }}</a>
+                    <a class="js-notification-close js-notification-status-page-close ml-3" href="#">
+                        {% include "snipplets/svg/times.tpl" with {svg_custom_class: "icon-inline svg-icon-text icon-lg"} %}
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endif %}
 
 {% if add_to_cart %}
     <div class="js-alert-added-to-cart notification-floating notification-hidden {% if add_to_cart_fixed %}notification-fixed{% endif %}" style="display: none;">
-        <div class="notification notification-primary notification-with-arrow position-relative {% if not add_to_cart_mobile %}col-12 float-right{% endif %}">
-            <div class="h6 text-center mb-3 mr-3">
-                <strong>{{ '¡Ya agregamos tu producto al carrito!' | translate }}</strong>
-            </div>
+        <div class="notification notification-primary notification-cart position-relative {% if not add_to_cart_mobile %}col-12 float-right{% endif %}">
+            <div class="js-cart-notification-arrow-up notification-arrow-up"></div>
             <div class="js-cart-notification-close notification-close">
-                {% include "snipplets/svg/times.tpl" with {svg_custom_class: "icon-inline svg-icon-primary"} %}
+                {% include "snipplets/svg/times.tpl" with {svg_custom_class: "icon-inline icon-2x  svg-icon-primary notification-icon"} %}
             </div>
             <div class="js-cart-notification-item row">
-                <div class="col-3 pr-0 notification-img">
+                <div class="col-2 pr-0 notification-img">
                     <img src="" class="js-cart-notification-item-img img-fluid" />
+                    {% include "snipplets/svg/check-circle-filled.tpl" with {svg_custom_class: "icon-inline icon-sm  svg-icon-primary"} %}
                 </div>
-                <div class="col-9 text-left">
-                    <div class="mb-1">
+                <div class="col-10 text-left">
+                    <div class="mb-1 mr-4">
                         <span class="js-cart-notification-item-name"></span>
                         <span class="js-cart-notification-item-variant-container" style="display: none;">
                             (<span class="js-cart-notification-item-variant"></span>)
@@ -42,10 +51,12 @@
                         <span> x </span>
                         <span class="js-cart-notification-item-price"></span>
                     </div>
+                    <strong>{{ '¡Agregado al carrito con éxito!' | translate }}</strong>
                 </div>
             </div>
-            <div class="row text-primary h5 font-weight-normal mt-2 mb-3">
-                <span class="col-auto text-left">
+            <div class="divider my-3"></div>
+            <div class="row text-primary h5 font-weight-normal mb-3">
+                <span class="col-auto text-left ml-2">
                     <strong>{{ "Total" | translate }}</strong> 
                     (<span class="js-cart-widget-amount">
                         {{ "{1}" | translate(cart.items_count ) }} 
@@ -56,8 +67,9 @@
                     <span class="js-cart-counts-singular" style="display: none;">
                         {{ 'producto' | translate }}):
                     </span>
+
                 </span>
-                <strong class="js-cart-total col text-right">{{ cart.total | money }}</strong>
+                <strong class="js-cart-total col text-right mr-2">{{ cart.total | money }}</strong>
             </div>
             <a href="#" class="js-modal-open js-cart-notification-close js-fullscreen-modal-open btn btn-primary btn-medium w-100 d-inline-block" data-toggle="#modal-cart" data-modal-url="modal-fullscreen-cart">
                 {{'Ver carrito' | translate }}
